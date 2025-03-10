@@ -1,0 +1,4203 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Storm API",
+    "description": "Description",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Local server"
+    },
+    {
+      "url": "https://dev.sionicstorm.ai/api/",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Email 로그인",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Email 로그인",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/cipher-login": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cipher",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Email 회원가입",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postAuthSignup"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postAuthSignup"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/check": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/sso/slack/": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/sso/slack/callback": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/sso/google/": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/sso/google/callback": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/playground/clova": {
+      "get": {
+        "tags": [
+          "Playground"
+        ],
+        "description": "클로바 사용량 확인",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Playground"
+        ],
+        "description": "클로바 사용",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/slack/install/": {
+      "get": {
+        "tags": [
+          "Slack"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/slack/install/callback": {
+      "get": {
+        "tags": [
+          "Slack"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/slack/event/": {
+      "post": {
+        "tags": [
+          "Slack"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "example": "any"
+                  },
+                  "team_id": {
+                    "example": "any"
+                  },
+                  "payload": {
+                    "example": "any"
+                  },
+                  "challenge": {
+                    "example": "any"
+                  },
+                  "type": {
+                    "example": "any"
+                  },
+                  "api_app_id": {
+                    "example": "any"
+                  },
+                  "event": {
+                    "example": "any"
+                  },
+                  "event_id": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/slack/interactive/": {
+      "post": {
+        "tags": [
+          "Slack"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "example": "any"
+                  },
+                  "team_id": {
+                    "example": "any"
+                  },
+                  "payload": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/slack/command/": {
+      "post": {
+        "tags": [
+          "Slack"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "example": "any"
+                  },
+                  "team_id": {
+                    "example": "any"
+                  },
+                  "payload": {
+                    "example": "any"
+                  },
+                  "user_id": {
+                    "example": "any"
+                  },
+                  "channel_id": {
+                    "example": "any"
+                  },
+                  "text": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channeltalk/event/": {
+      "post": {
+        "tags": [
+          "ChannelTalk"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refers": {
+                    "example": "any"
+                  },
+                  "event": {
+                    "example": "any"
+                  },
+                  "type": {
+                    "example": "any"
+                  },
+                  "entity": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/kakaotalk/event/": {
+      "post": {
+        "tags": [
+          "KakaoTalk"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bot": {
+                    "example": "any"
+                  },
+                  "userRequest": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pylon/callback/agents": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pylon/callback/buckets": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pylon/callback/documents": {
+      "post": {
+        "tags": [
+          "Pylon"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "example": "any"
+                  },
+                  "result": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pylon/callback/advices": {
+      "post": {
+        "tags": [
+          "Pylon"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "example": "any"
+                  },
+                  "result": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pylon/callback/query": {
+      "post": {
+        "tags": [
+          "Pylon"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "task_id": {
+                    "example": "any"
+                  },
+                  "status": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pylon/callback/deployments": {
+      "post": {
+        "tags": [
+          "Pylon"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "example": "any"
+                  },
+                  "result": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pylon/callback/write": {
+      "post": {
+        "tags": [
+          "Pylon"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "example": "any"
+                  },
+                  "result": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me/": {
+      "get": {
+        "tags": [
+          "Me"
+        ],
+        "description": "내 정보 확인",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/me/teams": {
+      "get": {
+        "tags": [
+          "Me"
+        ],
+        "description": "내가 속한 팀의 리스트 확인",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/take"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/me/teams/invite": {
+      "post": {
+        "tags": [
+          "Me"
+        ],
+        "description": "팀 초대 수락",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postMeTeamInvite"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postMeTeamInvite"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/": {
+      "post": {
+        "tags": [
+          "Team"
+        ],
+        "description": "팀 생성",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postTeam"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postTeam"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "description": "팀 정보 획득",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Team"
+        ],
+        "description": "팀 속성 변경",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/patchTeam"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/patchTeam"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}/members": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "description": "팀 멤버 리스트 획득",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/take"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/teams/{teamId}/members/{userId}": {
+      "patch": {
+        "tags": [
+          "Team"
+        ],
+        "description": "팀 멤버의 속성 변경",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/patchTeamMembers"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/patchTeamMembers"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}/invites": {
+      "post": {
+        "tags": [
+          "Team"
+        ],
+        "description": "팀 멤버 초대",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postTeamInvites"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postTeamInvites"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}/agents": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "description": "팀 에이전트 리스트 획득",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/take"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Team"
+        ],
+        "description": "팀 에이전트 등록",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postTeamAgents"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postTeamAgents"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{agentId}": {
+      "get": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트 정보 획득",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "팀 에이전트 수정",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/patchTeamAgents"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/patchTeamAgents"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "팀 에이전트 삭제",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/knowledges": {
+      "get": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트의 Knowledges 리스트 획득",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/take"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/instructions": {
+      "delete": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트의 Knowledges 삭제",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteAgentKnowledges"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteAgentKnowledges"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{agentId}/documents/url": {
+      "post": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트에 문서 URL 등록",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postAgentDocumentsUrl"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postAgentDocumentsUrl"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{agentId}/documents/file": {
+      "post": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트에 문서 File 등록",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/files"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/deployments": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "memo": {
+                    "example": "any"
+                  },
+                  "agentVersionId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트의 배포 히스토리 목록 조회",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "agentVersionStatus",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/channels": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "example": "any"
+                  },
+                  "name": {
+                    "example": "any"
+                  },
+                  "kakaoBotId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/buckets": {
+      "get": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트의 버킷 리스트 획득",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/take"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트에 버킷 등록",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postAgentBuckets"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postAgentBuckets"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트의 버킷 일괄 변경",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postAgentBuckets"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postAgentBuckets"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{agentId}/threads/report": {
+      "get": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트의 스레드 로그 임시!! 획득",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "googleDriveFolderId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/versions": {
+      "get": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트의 배포 히스토리 목록 조회",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/threads": {
+      "post": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트에 스레드 등록",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/basic-instructions": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{agentId}/advices": {
+      "post": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "에이전트에 피드백 등록",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "qnas": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{agentId}/configs": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "promptTemplateRecipe": {
+                    "example": "any"
+                  },
+                  "systemConfig": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/documents/{documentId}": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "description": "문서 정보 획득",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Document"
+        ],
+        "description": "문서 내용 수정 (URL로 등록한 문서)",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Document"
+        ],
+        "description": "문서 정보 수정",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "example": "any"
+                  },
+                  "bucketIds": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/download": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/documents/": {
+      "delete": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "여러 개의 document 삭제",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteAgentKnowledges"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteAgentKnowledges"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buckets/{bucketId}": {
+      "patch": {
+        "tags": [
+          "Bucket"
+        ],
+        "description": "버킷 정보 수정",
+        "parameters": [
+          {
+            "name": "bucketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/patchBucket"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/patchBucket"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bucket"
+        ],
+        "description": "버킷 삭제",
+        "parameters": [
+          {
+            "name": "bucketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/threads/{threadId}/chats": {
+      "post": {
+        "tags": [
+          "Thread"
+        ],
+        "description": "스레드에 질문 등록",
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postThreadReply"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/postThreadReply"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chats/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/chats/download": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/chats/{chatId}": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "description": "챗 조회",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/chats/{chatId}/sources": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "description": "관련 소스 조회",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/chats/{chatId}/chat-advices": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "example": "any"
+                  },
+                  "qna": {
+                    "example": "any"
+                  },
+                  "bucketId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chats/{chatId}/chat-advices/{chatAdviceId}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chatAdviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "qna": {
+                    "example": "any"
+                  },
+                  "bucketId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chatAdviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/chat-advices/{chatAdviceId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "chatAdviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/chat-advices/": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "chatAdviceIds": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sse/": {
+      "post": {
+        "tags": [
+          "SSE"
+        ],
+        "description": "테스트 페이지 접속시 SSE connection 생성",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "SSE"
+        ],
+        "description": "SSE connection 해제",
+        "parameters": [
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/admin/teams": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "users": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/documents": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "webhookUrl": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/advices/{adviceId}": {
+      "get": {
+        "tags": [
+          "Advice"
+        ],
+        "description": "피드백 정보 조회",
+        "parameters": [
+          {
+            "name": "adviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Advice"
+        ],
+        "description": "피드백 정보 수정",
+        "parameters": [
+          {
+            "name": "adviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/advices/": {
+      "delete": {
+        "tags": [
+          "Advice"
+        ],
+        "description": "여러 개의 피드백 삭제",
+        "parameters": [
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "adviceIds": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-keys/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deployments/{deploymentId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "deploymentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/guest/test/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/guest/sessions/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "x-storm-guest-id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ttl",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/guest/documents/": {
+      "post": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "학습 요청",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "webhookUrl": {
+                    "example": "any"
+                  },
+                  "urls": {
+                    "example": "any"
+                  },
+                  "postActions": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/guest/documents/{documentId}": {
+      "get": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "문서 정보 획득",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/guest/contexts/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/{version}/buckets/": {
+      "post": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "에이전트에 버킷 등록",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/{version}/buckets/{bucketId}": {
+      "patch": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "버킷 정보 수정",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bucketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/{version}/documents/": {
+      "post": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "학습 요청",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "webhookUrl": {
+                    "example": "any"
+                  },
+                  "urls": {
+                    "example": "any"
+                  },
+                  "postActions": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/{version}/documents/{documentId}": {
+      "get": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "문서 정보 획득",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/{version}/threads/": {
+      "post": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "스레드 등록",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/{version}/threads/{threadId}/chats": {
+      "post": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "채팅 전송",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "threadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "example": "any"
+                  },
+                  "bucketIds": {
+                    "example": "any"
+                  },
+                  "isStreaming": {
+                    "example": "any"
+                  },
+                  "isContextOnly": {
+                    "example": "any"
+                  },
+                  "webhookUrl": {
+                    "example": "any"
+                  },
+                  "engine": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/{version}/answer/": {
+      "post": {
+        "tags": [
+          "API v1"
+        ],
+        "description": "채널 API 연동으로 질문 등록",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "example": "any"
+                  },
+                  "bucketIds": {
+                    "example": "any"
+                  },
+                  "isStreaming": {
+                    "example": "any"
+                  },
+                  "isContextOnly": {
+                    "example": "any"
+                  },
+                  "webhookUrl": {
+                    "example": "any"
+                  },
+                  "engine": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/{version}/agents/{agentId}/deployments": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "memo": {
+                    "example": "any"
+                  },
+                  "agentVersionId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channels/{channelId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "example": "any"
+                  },
+                  "name": {
+                    "example": "any"
+                  },
+                  "kakaoBotId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/channels/{channelId}/renew-token": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/write/": {
+      "post": {
+        "tags": [
+          "Write"
+        ],
+        "description": "기사 생성",
+        "parameters": [
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testId": {
+                    "example": "any"
+                  },
+                  "text": {
+                    "example": "any"
+                  },
+                  "metadata": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/write/refine/title": {
+      "post": {
+        "tags": [
+          "Write"
+        ],
+        "description": "기사 제목 정제",
+        "parameters": [
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testId": {
+                    "example": "any"
+                  },
+                  "text": {
+                    "example": "any"
+                  },
+                  "metadata": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/write/refine/subtitle": {
+      "post": {
+        "tags": [
+          "Write"
+        ],
+        "description": "기사 부제목 정제",
+        "parameters": [
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testId": {
+                    "example": "any"
+                  },
+                  "text": {
+                    "example": "any"
+                  },
+                  "title": {
+                    "example": "any"
+                  },
+                  "metadata": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/write/refine/lead": {
+      "post": {
+        "tags": [
+          "Write"
+        ],
+        "description": "기사 리드문 정제",
+        "parameters": [
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testId": {
+                    "example": "any"
+                  },
+                  "text": {
+                    "example": "any"
+                  },
+                  "title": {
+                    "example": "any"
+                  },
+                  "subtitle": {
+                    "example": "any"
+                  },
+                  "metadata": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/write/refine/body": {
+      "post": {
+        "tags": [
+          "Write"
+        ],
+        "description": "기사 바디문 정제",
+        "parameters": [
+          {
+            "name": "sse-connection-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testId": {
+                    "example": "any"
+                  },
+                  "text": {
+                    "example": "any"
+                  },
+                  "title": {
+                    "example": "any"
+                  },
+                  "subtitle": {
+                    "example": "any"
+                  },
+                  "metadata": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/write/report": {
+      "get": {
+        "tags": [
+          "Agent"
+        ],
+        "description": "write report 생성",
+        "parameters": [
+          {
+            "name": "testId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "googleDriveFolderId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "search": {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "order": {
+        "in": "query",
+        "name": "order",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "cursor": {
+        "in": "query",
+        "name": "cursor",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "take": {
+        "in": "query",
+        "name": "take",
+        "schema": {
+          "type": "integer",
+          "minimun": 1
+        }
+      },
+      "files": {
+        "in": "formData",
+        "name": "files",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      }
+    },
+    "schemas": {
+      "postAuthSignup": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": ""
+          },
+          "name": {
+            "type": "string",
+            "example": ""
+          },
+          "password": {
+            "type": "string",
+            "example": ""
+          },
+          "code": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "xml": {
+          "name": "postAuthSignup"
+        }
+      },
+      "postTeam": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "newTeamName"
+          }
+        },
+        "xml": {
+          "name": "postTeam"
+        }
+      },
+      "patchTeam": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "newTeamName"
+          }
+        },
+        "xml": {
+          "name": "patchTeam"
+        }
+      },
+      "patchTeamMembers": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "example": "member"
+          }
+        },
+        "xml": {
+          "name": "patchTeamMembers"
+        }
+      },
+      "postTeamInvites": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "example": "test@test.com"
+            },
+            "role": {
+              "type": "string",
+              "example": "member"
+            }
+          }
+        },
+        "xml": {
+          "name": "postTeamInvites"
+        }
+      },
+      "postTeamAgents": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "newAgentName"
+          },
+          "language": {
+            "type": "string",
+            "example": "ko"
+          }
+        },
+        "xml": {
+          "name": "postTeamAgents"
+        }
+      },
+      "patchTeamAgents": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "newAgentName"
+          },
+          "language": {
+            "type": "string",
+            "example": "ko"
+          }
+        },
+        "xml": {
+          "name": "patchTeamAgents"
+        }
+      },
+      "postTeamWorkspaceIntegrations": {
+        "type": "object",
+        "properties": {
+          "workspaceType": {
+            "type": "string",
+            "example": "channeltalk"
+          },
+          "workspaceId": {
+            "type": "string",
+            "example": "123456"
+          },
+          "accessToken": {
+            "type": "string",
+            "example": "651xx3f16d1a110a3c11"
+          },
+          "accessKey": {
+            "type": "string",
+            "example": "123123"
+          },
+          "accessSecret": {
+            "type": "string",
+            "example": "7d607xxxxxxxxxxxxxxxxxxxx"
+          }
+        },
+        "xml": {
+          "name": "postTeamWorkspaceIntegrations"
+        }
+      },
+      "postMeTeamInvite": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "xml": {
+          "name": "postMeTeamInvite"
+        }
+      },
+      "deleteAgentKnowledges": {
+        "type": "object",
+        "properties": {
+          "documentIds": {
+            "type": "array",
+            "example": [
+              "123456"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "adviceIds": {
+            "type": "array",
+            "example": [
+              "123456"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "xml": {
+          "name": "deleteAgentKnowledges"
+        }
+      },
+      "postAgentDocumentsUrl": {
+        "type": "object",
+        "properties": {
+          "documentUrls": {
+            "type": "array",
+            "example": [
+              "https://examples.com"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "bucketIds": {
+            "type": "array",
+            "example": [
+              "123456"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "xml": {
+          "name": "postAgentDocumentsUrl"
+        }
+      },
+      "postAgentDocumentsFile": {
+        "type": "object",
+        "properties": {
+          "bucketIds": {
+            "type": "array",
+            "example": [
+              "123456"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "xml": {
+          "name": "postAgentDocumentsFile"
+        }
+      },
+      "postAgentBuckets": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "default"
+          },
+          "name": {
+            "type": "string",
+            "example": "newBucketName"
+          }
+        },
+        "xml": {
+          "name": "postAgentBuckets"
+        }
+      },
+      "putAgentBuckets": {
+        "type": "object",
+        "properties": {
+          "create": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "default"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "newBucketName"
+                }
+              }
+            }
+          },
+          "update": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "123456"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "optional"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "newBucketName"
+                }
+              }
+            }
+          },
+          "delete": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "putAgentBuckets"
+        }
+      },
+      "patchBucket": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "optional"
+          },
+          "name": {
+            "type": "string",
+            "example": "newBucketName"
+          }
+        },
+        "xml": {
+          "name": "patchBucket"
+        }
+      },
+      "postThreadReply": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "example": "질문 텍스트"
+          }
+        },
+        "xml": {
+          "name": "postThreadReply"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Storm-Token"
+      }
+    }
+  }
+}
