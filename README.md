@@ -1,14 +1,21 @@
-# Storm MCP Server
+# Storm MCP Server with Sionic AI serverless RAG
 
 ## Korean (한국어)
 
 ### Storm MCP(Model Context Protocol) Server
 
-Storm MCP(Model Context Protocol) 서버는 LLM(대규모 언어 모델) 애플리케이션과 외부 데이터 소스 및 도구들 간의 원활한 통합을 가능하게 하는 서버입니다. [Model Context Protocol](https://modelcontextprotocol.io/introduction)을 구현하여 AI 시스템에 컨텍스트와 도구를 제공합니다.
+Storm MCP(Model Context Protocol) 서버는 LLM 애플리케이션과 RAG 데이터 소스 및 도구들 간의 원활한 통합을 가능하게 하는 개방형 프로토콜입니다.
+Anthropic의 [Model Context Protocol](https://modelcontextprotocol.io/introduction)을 구현하여 Claude Desktop에서 Storm Platform을 바로 이용합니다.
 
-#### 정의와 목적
+Sionic AI 의 [Storm Platform](https://sionicstorm.ai) 를 통합해서 사용하여 나만의 강력한 임베딩 모델과 벡터DB 제품군을 연결하여 사용할 수 있습니다.
+https://sionicstorm.ai 에서 에이전트 단위로 가입하여서 API Token을 얻어서 RAG 솔루션을 바로 만드실 수 있습니다.
 
-MCP(Model Context Protocol)는 LLM 애플리케이션과 외부 데이터 소스 및 도구들 간의 원활한 통합을 가능하게 하는 개방형 프로토콜입니다. AI 기반 IDE, 채팅 인터페이스, 또는 커스텀 AI 워크플로우 등에서 LLM이 필요로 하는 컨텍스트를 연결하기 위한 표준화된 방법을 제공합니다.
+#### 사용 예시
+![example image](scripts/img.png)
+![example image 2](scripts/img_3.png)
+![example image 3](scripts/img_4.png)
+
+API Key는 `scripts/run.sh` 에 존재하는 `export STORM_API_KEY=''` 에 입력하세요.
 
 #### 주요 기능
 
@@ -30,10 +37,10 @@ MCP(Model Context Protocol)는 LLM 애플리케이션과 외부 데이터 소스
 
 MCP는 호스트(LLM 애플리케이션), 클라이언트(프로토콜 구현체), 서버(기능 제공자) 간의 3계층 구조로 설계되었습니다. Storm MCP 서버는 이 중 서버 부분을 구현하여 리소스와 도구를 LLM에 제공합니다.
 
-### 시작하기
+#### 시작하기
 **Claude Desktop** 환경에서 MCP 서버를 연결하려면, 아래와 같은 설정을 적용해야 합니다.
 
-![example image](scripts/example.png)
+![example image](scripts/img_1.png)
 
 1) 설정 파일 열기
 ```bash
@@ -58,11 +65,18 @@ code ~/Library/Application\ Support/Claude/claude_desktop_config.json
 
 ### Storm MCP(Model Context Protocol) Server
 
-Storm MCP(Model Context Protocol) サーバーは、LLM（大規模言語モデル）アプリケーションと外部データソースおよびツール間のシームレスな統合を可能にするサーバーです。[Model Context Protocol](https://modelcontextprotocol.io/introduction)を実装し、AIシステムにコンテキストとツールを提供します。
+Storm MCP(Model Context Protocol) サーバーは、LLMアプリケーションとRAGデータソースおよびツール間のシームレスな統合を可能にするオープンプロトコルです。
+Anthropicの[Model Context Protocol](https://modelcontextprotocol.io/introduction)を実装し、Claude DesktopでStorm Platformを直接利用できます。
 
-#### 定義と目的
+Sionic AI の [Storm Platform](https://sionicstorm.ai) を統合して使用することで、自分だけの強力な埋め込みモデルとベクターDB製品群を接続して利用できます。
+https://sionicstorm.ai でエージェント単位で登録してAPIトークンを取得し、すぐにRAGソリューションを作成できます。
 
-MCP(Model Context Protocol)は、LLMアプリケーションと外部データソースおよびツール間のシームレスな統合を可能にするオープンなプロトコルです。AI駆動のIDE、チャットインターフェース、あるいはカスタムAIワークフローなど、LLMが必要とするコンテキストを接続するための標準化された方法を提供します。
+#### 使用例
+![example image](scripts/img.png)
+![example image 2](scripts/img_3.png)
+![example image 3](scripts/img_4.png)
+
+APIキーは `scripts/run.sh` の `export STORM_API_KEY=''` に入力してください。
 
 #### 主な機能
 
@@ -83,3 +97,27 @@ MCP(Model Context Protocol)は、LLMアプリケーションと外部データ�
 #### アーキテクチャ
 
 MCPは、ホスト（LLMアプリケーション）、クライアント（プロトコル実装）、サーバー（機能提供者）間の3層構造で設計されています。Storm MCPサーバーはこのうちサーバー部分を実装し、リソースとツールをLLMに提供します。
+
+### 始め方
+**Claude Desktop** 環境でMCPサーバーを接続するには、以下の設定を適用する必要があります。
+
+![example image](scripts/img_1.png)
+
+1) 設定ファイルを開く
+```bash
+code ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
+
+2) JSON内にMCPサーバー設定を追加:
+```json
+{
+  "mcpServers": {
+    "storm": {
+      "command": "sh",
+      "args": [
+        "/Users/sigridjineth/Desktop/work/storm-mcp-server/scripts/run.sh"
+      ]
+    }
+  }
+}
+```

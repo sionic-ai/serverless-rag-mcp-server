@@ -7,7 +7,8 @@ cd "$ROOT_DIR"
 echo "Current directory: $(pwd)" 1>&2
 ls -la 1>&2
 
-export STORM_API_KEY='st_78b9ad250b9f403e82f6caa4f49f3453'
+# 아래에 Storm API KEY를 입력하세요.
+export STORM_API_KEY=''
 
 # ★ 'uv run' 대신 'python -m' 사용:
 uv run -m storm_mcp_server.main
