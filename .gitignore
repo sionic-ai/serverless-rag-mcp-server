@@ -1,1 +1,5 @@
 .idea
+        storm_mcp_server/__pycache__/
+        storm_mcp_server/core/__pycache__/
+        storm_mcp_server/tools/__pycache__/
+

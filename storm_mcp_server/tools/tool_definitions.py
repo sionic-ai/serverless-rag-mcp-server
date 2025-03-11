@@ -74,11 +74,7 @@ TOOLS_DEFINITION = [
     },
     {
         "name": "upload_document_by_file",
-        "description": (
-            "Bearer 토큰을 사용해 /api/v2/documents/by-file 에 문서를 업로드(학습)합니다. "
-            "multipart/form-data 로 bucketId, file 등을 전송. "
-            "코드상 환경변수 BEARER_TOKEN을 사용하므로, bearer_token은 불필요."
-        ),
+        "description": "파일을 /api/v2/documents/by-file 엔드포인트에 업로드",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -88,14 +84,24 @@ TOOLS_DEFINITION = [
                 },
                 "file_path": {
                     "type": "string",
-                    "description": "업로드할 로컬 파일 경로",
+                    "description": "업로드할 로컬 파일 경로 (옵션)",
+                },
+                "file_base64": {
+                    "type": "string",
+                    "description": "Base64 인코딩된 파일 데이터 (옵션)",
+                },
+                "file_name": {
+                    "type": "string",
+                    "description": "file_base64를 사용하는 경우, 업로드될 실제 파일 이름 (예: foo.pdf)",
                 },
                 "webhook_url": {
                     "type": "string",
                     "description": "결과를 받을 웹훅 URL (옵션)",
                 },
             },
-            "required": ["bucket_id", "file_path"],  # bearer_token은 환경변수로 사용
+            "required": [
+                "bucket_id"
+            ],  # bucket_id는 반드시 필요, file_path 또는 file_base64는 둘 중 하나 이상 있어야 함
         },
     },
 ]

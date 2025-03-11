@@ -1,10 +1,10 @@
 .PHONY: format check
 
 format:
-	ruff format storm-mcp-server
+	ruff format storm_mcp_server
 
 check:
-	ruff check storm-mcp-server
+	ruff check storm_mcp_server
 
 run:
 	sh ./scripts/run.sh
