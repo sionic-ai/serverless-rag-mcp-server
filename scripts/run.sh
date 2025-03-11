@@ -11,4 +11,4 @@ echo "Listing contents:" 1>&2
 ls -la 1>&2
 
 # MCP 서버(Python 스크립트) 실행
-uv run ./hello.py
+uv run ../storm-mcp-server/main.py
