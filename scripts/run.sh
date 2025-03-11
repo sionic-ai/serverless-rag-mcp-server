@@ -10,5 +10,7 @@ echo "Current directory: $(pwd)" 1>&2
 echo "Listing contents:" 1>&2
 ls -la 1>&2
 
+export STORM_API_KEY=''
+
 # MCP 서버(Python 스크립트) 실행
 uv run ../storm-mcp-server/main.py

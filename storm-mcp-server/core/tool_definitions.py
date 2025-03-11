@@ -29,60 +29,59 @@ TOOLS_DEFINITION = [
                     "description": "결과를 받을 웹훅 URL (옵션)",
                 },
             },
-            "required": ["api_key", "question"],
+            "required": ["api_key", "question"],  # 필수: api_key, question
         },
     },
     {
         "name": "list_agents",
         "description": (
-            "Bearer 토큰을 사용해 /api/v2/agents GET 으로 호출, "
-            "현재 로그인 유저(=해당 bearer) 기준의 에이전트 목록을 가져옵니다."
+            "Bearer 토큰을 사용해 /api/v2/agents GET으로 호출, "
+            "현재 로그인 유저(=해당 bearer) 기준의 에이전트 목록을 가져옵니다. "
+            "코드에서 환경변수 BEARER_TOKEN을 사용하므로, 인자로 받을 필요는 없습니다."
         ),
         "inputSchema": {
             "type": "object",
             "properties": {
-                "bearer_token": {
-                    "type": "string",
-                    "description": "인증에 사용할 Bearer 토큰",
+                # bearer_token을 굳이 넣지 않고, page/size만 옵션
+                "page": {
+                    "type": "integer",
+                    "description": "페이지 번호 (옵션)",
                 },
-                "page": {"type": "integer", "description": "페이지 번호 (옵션)"},
-                "size": {"type": "integer", "description": "페이지 크기 (옵션)"},
+                "size": {
+                    "type": "integer",
+                    "description": "페이지 크기 (옵션)",
+                },
             },
-            "required": ["bearer_token"],
+            "required": [],  # 모두 옵션
         },
     },
     {
         "name": "list_buckets",
         "description": (
-            "Bearer 토큰을 사용해 /api/v2/buckets GET 으로 호출, 특정 에이전트에 등록된 버킷 목록을 조회합니다."
+            "Bearer 토큰을 사용해 /api/v2/buckets GET으로 호출, 특정 에이전트에 등록된 버킷 목록을 조회합니다."
+            " 코드상에서는 환경변수 BEARER_TOKEN을 사용하며, 인자로 agent_id만 꼭 필요합니다."
         ),
         "inputSchema": {
             "type": "object",
             "properties": {
-                "bearer_token": {
-                    "type": "string",
-                    "description": "인증에 사용할 Bearer 토큰",
-                },
+                # bearer_token도 빼거나, 혹은 남겨두되 필수는 아님
                 "agent_id": {"type": "string", "description": "조회할 에이전트 ID"},
                 "page": {"type": "integer", "description": "페이지 번호 (옵션)"},
                 "size": {"type": "integer", "description": "페이지 크기 (옵션)"},
             },
-            "required": ["bearer_token", "agent_id"],
+            "required": ["agent_id"],  # agent_id만 필수
         },
     },
     {
         "name": "upload_document_by_file",
         "description": (
             "Bearer 토큰을 사용해 /api/v2/documents/by-file 에 문서를 업로드(학습)합니다. "
-            "multipart/form-data 로 bucketId, file 등을 전송."
+            "multipart/form-data 로 bucketId, file 등을 전송. "
+            "코드상 환경변수 BEARER_TOKEN을 사용하므로, bearer_token은 불필요."
         ),
         "inputSchema": {
             "type": "object",
             "properties": {
-                "bearer_token": {
-                    "type": "string",
-                    "description": "인증에 사용할 Bearer 토큰",
-                },
                 "bucket_id": {
                     "type": "string",
                     "description": "학습된 문서를 저장할 버킷 ID",
@@ -96,7 +95,7 @@ TOOLS_DEFINITION = [
                     "description": "결과를 받을 웹훅 URL (옵션)",
                 },
             },
-            "required": ["bearer_token", "bucket_id", "file_path"],
+            "required": ["bucket_id", "file_path"],  # bearer_token은 환경변수로 사용
         },
     },
 ]

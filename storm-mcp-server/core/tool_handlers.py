@@ -1,14 +1,19 @@
 import asyncio
 import json
+import os
 from typing import List, Dict, Any
 from mcp.types import Tool, TextContent
 
-from core.tool_definitions import TOOLS_DEFINITION
 from .chat_api import call_chat_api
 from .internal_api import call_internal_api
+from .tool_definitions import TOOLS_DEFINITION
 
 
 async def handle_list_tools() -> List[Tool]:
+    """
+    MCP에서 'tools/list' 이벤트가 오면,
+    우리가 보유한 툴(TOOLS_DEFINITION)을 반환.
+    """
     tool_objects: List[Tool] = []
     for tdef in TOOLS_DEFINITION:
         tool_objects.append(
@@ -30,9 +35,9 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
     """
     try:
         if name == "send_nonstream_chat":
-            # ---------------------
-            # 1) /api/v2/answer (non-stream) 호출 (Storm API Key)
-            # ---------------------
+            # --------------------------------------------------------
+            # (1) /api/v2/answer (non-stream) - Storm API Key 기반
+            # --------------------------------------------------------
             api_key = arguments.get("api_key", "").strip()
             question = arguments.get("question", "").strip()
             bucket_ids = arguments.get("bucketIds", None)
@@ -44,6 +49,7 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
             if not question:
                 raise ValueError("question is required")
 
+            # 실제 호출
             response_data = await asyncio.to_thread(
                 call_chat_api,
                 api_key=api_key,
@@ -52,19 +58,24 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
                 thread_id=thread_id,
                 webhook_url=webhook_url,
             )
+            # JSON을 예쁘게 정렬해 반환
             result_text = json.dumps(response_data, ensure_ascii=False, indent=2)
             return [TextContent(type="text", text=result_text)]
 
         elif name == "list_agents":
-            # ---------------------
-            # 2) /api/v2/agents (GET) Bearer 토큰 인증
-            # ---------------------
-            bearer_token = arguments.get("bearer_token", "").strip()
+            # --------------------------------------------------------
+            # (2) /api/v2/agents (GET) - Storm API Key
+            # --------------------------------------------------------
+            # 1) 호출 시 arguments["api_key"] 있으면 사용
+            # 2) 없으면 os.getenv("STORM_API_KEY") 로 가져옴
+            api_key = arguments.get("api_key", "").strip() or os.getenv("STORM_API_KEY")
+            if not api_key:
+                raise ValueError(
+                    "No storm API key found (api_key argument or STORM_API_KEY env)"
+                )
+
             page = arguments.get("page", None)
             size = arguments.get("size", None)
-
-            if not bearer_token:
-                raise ValueError("bearer_token is required")
 
             params = {}
             if page is not None:
@@ -76,25 +87,28 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
                 call_internal_api,
                 method="GET",
                 endpoint="/api/v2/agents",
-                bearer_token=bearer_token,
+                storm_api_key=api_key,  # 수정: storm_api_key로 전달
                 params=params,
             )
             result_text = json.dumps(response_data, ensure_ascii=False, indent=2)
             return [TextContent(type="text", text=result_text)]
 
         elif name == "list_buckets":
-            # ---------------------
-            # 3) /api/v2/buckets (GET) Bearer 토큰 인증
-            # ---------------------
-            bearer_token = arguments.get("bearer_token", "").strip()
-            agent_id = arguments.get("agent_id", "").strip()
-            page = arguments.get("page", None)
-            size = arguments.get("size", None)
+            # --------------------------------------------------------
+            # (3) /api/v2/buckets (GET) - Storm API Key
+            # --------------------------------------------------------
+            api_key = arguments.get("api_key", "").strip() or os.getenv("STORM_API_KEY")
+            if not api_key:
+                raise ValueError(
+                    "No storm API key found (api_key argument or STORM_API_KEY env)"
+                )
 
-            if not bearer_token:
-                raise ValueError("bearer_token is required")
+            agent_id = arguments.get("agent_id", "").strip()
             if not agent_id:
                 raise ValueError("agent_id is required")
+
+            page = arguments.get("page", None)
+            size = arguments.get("size", None)
 
             params = {"agentId": agent_id}
             if page is not None:
@@ -106,23 +120,26 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
                 call_internal_api,
                 method="GET",
                 endpoint="/api/v2/buckets",
-                bearer_token=bearer_token,
+                storm_api_key=api_key,
                 params=params,
             )
             result_text = json.dumps(response_data, ensure_ascii=False, indent=2)
             return [TextContent(type="text", text=result_text)]
 
         elif name == "upload_document_by_file":
-            # ---------------------
-            # 4) /api/v2/documents/by-file (POST) Bearer + multipart
-            # ---------------------
-            bearer_token = arguments.get("bearer_token", "").strip()
+            # --------------------------------------------------------
+            # (4) /api/v2/documents/by-file (POST) - Storm API Key + multipart
+            # --------------------------------------------------------
+            api_key = arguments.get("api_key", "").strip() or os.getenv("STORM_API_KEY")
+            if not api_key:
+                raise ValueError(
+                    "No storm API key found (api_key argument or STORM_API_KEY env)"
+                )
+
             bucket_id = arguments.get("bucket_id", "").strip()
             file_path = arguments.get("file_path", "").strip()
             webhook_url = arguments.get("webhook_url", None)
 
-            if not bearer_token:
-                raise ValueError("bearer_token is required")
             if not bucket_id:
                 raise ValueError("bucket_id is required")
             if not file_path:
@@ -139,7 +156,7 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
                     call_internal_api,
                     method="POST",
                     endpoint="/api/v2/documents/by-file",
-                    bearer_token=bearer_token,
+                    storm_api_key=api_key,
                     data=data,
                     files=files,
                 )
