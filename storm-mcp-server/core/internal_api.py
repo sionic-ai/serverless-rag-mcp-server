@@ -1,19 +1,18 @@
+import os
+
 import requests
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 
 def call_internal_api(
     method: str,
     endpoint: str,
-    storm_api_key: str,
     base_url: str = "https://live-stargate.sionic.im",
     params: Dict[str, Any] = None,
     data: Dict[str, Any] = None,
     files: Dict[str, Any] = None,
 ) -> Dict[str, Any]:
-    """
-    storm-api-key를 사용해 내부 API를 호출하는 공통 헬퍼.
-    """
+    storm_api_key = os.getenv("STORM_API_KEY")
     url = f"{base_url}{endpoint}"
     headers = {"Content-Type": "application/json", "storm-api-key": storm_api_key}
 
@@ -42,3 +41,39 @@ def call_internal_api(
         return resp.json()
     except Exception:
         return {"status": "success", "data": resp.text}
+
+
+def call_chat_api(
+    question: str,
+    bucket_ids: List[str] = None,
+    thread_id: str = None,
+    webhook_url: str = None,
+    base_url: str = "https://live-stargate.sionic.im",
+) -> Dict[str, Any]:
+    """
+    /api/v2/answer (non-stream) 호출 예시
+    - header: storm-api-key: {api_key}
+    - body: { "question": "...", "bucketIds": [...], "threadId": "...", "webhookUrl": "..." }
+    """
+    url = f"{base_url}/api/v2/answer"
+    storm_api_key = os.getenv("STORM_API_KEY")
+    headers = {
+        "Content-Type": "application/json",
+        "storm-api-key": storm_api_key,
+    }
+
+    body = {
+        "question": question,
+    }
+    if bucket_ids:
+        body["bucketIds"] = bucket_ids
+    if thread_id:
+        body["threadId"] = thread_id
+    if webhook_url:
+        body["webhookUrl"] = webhook_url
+
+    response = requests.post(url, headers=headers, json=body, timeout=30)
+    if response.status_code >= 400:
+        raise Exception(f"API error: {response.status_code} - {response.text}")
+
+    return response.json()
